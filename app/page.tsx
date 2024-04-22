@@ -5,6 +5,11 @@ import AgeConfirm from './components/age-confirm'
 import Positions from './components/positions'
 import Description from './components/description'
 import Background from './components/background/background'
+import Employment from './components/employment/employment'
+import PrevEmploy from './components/employment/prev-employ'
+import Pitch from './components/pitch'
+import Conditions from './components/conditions'
+import Submit from './components/submit'
 
 export default function Home() {
   return (
@@ -15,6 +20,11 @@ export default function Home() {
       <AgeConfirm />
       <Positions />
       <Background />
+      <Employment />
+      <PrevEmploy />
+      <Pitch />
+      <Conditions />
+      <Submit />
     </main>
   )
 }
