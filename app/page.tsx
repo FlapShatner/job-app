@@ -1,5 +1,7 @@
 'use client'
 import Contact from './components/contact'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { DevTools } from 'jotai-devtools'
 import AgeConfirm from './components/age-confirm'
 import Positions from './components/positions'

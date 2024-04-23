@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { cn } from '../utils/cn'
 import { useAtomValue, useAtom } from 'jotai'
 import { findEmptyStrings, missingRequired } from '../utils/utils'
-import { sendEmail } from '../utils/services'
+import { ToastContainer, toast } from 'react-toastify'
 import {
   ageConfirmAtom,
   contactAtom,
@@ -26,8 +27,10 @@ import {
   dataAtom
 } from '../state/atoms'
 import ReactEmail from '../email/react-email'
+import Loading from './loading'
 
 const Submit = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const ageConfirm = useAtomValue(ageConfirmAtom)
   const contact = useAtomValue(contactAtom)
   const selectedPositions = useAtomValue(selectedPositionsAtom)
@@ -50,37 +53,49 @@ const Submit = () => {
   const [data, setData] = useAtom(dataAtom)
   const [missingFields, setMissingFields] = useAtom(missingFieldsAtom)
 
+  const notify = () => toast('Please fill out all required fields', { type: 'error' })
+
   const handleClick = async () => {
     const emptyFields = [...findEmptyStrings(contact), ...findEmptyStrings(pitch), ...findEmptyStrings(appeal), ...findEmptyStrings(conditions)]
     let missing = missingRequired(emptyFields)
-
+    let proceed = true
     if (emptyFields.length > 0) {
       setMissingFields(missing)
       console.log('emptyfieldsmissing:', missing)
-      if (missing.length > 0) return
+      if (missing.length > 0) {
+        proceed = false
+      }
     }
     if (selectedPositions.length === 0) {
       missing = [...missing, 'positions']
       setMissingFields([...missing, 'positions'])
       console.log('positionsmissing:', missing)
-      return
+
+      proceed = false
     }
     if (appeal === '') {
       missing = [...missing, 'appeal']
       setMissingFields([...missing, 'appeal'])
       console.log('appealmissing:', missing)
-      return
+
+      proceed = false
     }
     if (pitch === '') {
       missing = [...missing, 'pitch']
       setMissingFields([...missing, 'pitch'])
       console.log('pitchmissing:', missing)
-      return
+
+      proceed = false
     }
     if (!available && conditions.length === 0) {
       missing = [...missing, 'conditions']
       setMissingFields([...missing, 'conditions'])
       console.log('availmissing:', missing)
+
+      proceed = false
+    }
+    if (!proceed) {
+      notify()
       return
     }
 
@@ -109,7 +124,7 @@ const Submit = () => {
     }
     setData(data)
     console.log(data)
-
+    setIsLoading(true)
     const response = await fetch('http://localhost:3000/api/send', {
       method: 'POST',
       headers: {
@@ -119,14 +134,21 @@ const Submit = () => {
     })
     const res = await response.json()
     console.log('res:', res)
+    if (res.id) {
+      setIsLoading(false)
+      toast('Application submitted successfully', { type: 'success' })
+    }
   }
 
   return (
     <div>
-      <button onClick={handleClick} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-12 rounded">
-        Submit Application
+      <button
+        onClick={handleClick}
+        className={cn('flex items-center justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold h-12 w-[300px] rounded')}
+      >
+        {isLoading ? <Loading /> : 'Submit Application'}
       </button>
-      {/* <ReactEmail data={data} /> */}
+      <ToastContainer />
     </div>
   )
 }

@@ -30,7 +30,7 @@ const Positions = () => {
       </div>
       <ul className="flex flex-col gap-1 mt-1 border border-slate-500">
         {selectedPositions.map((position, index) =>
-          <li className="flex gap-1 bg-slate-200 w-max px-1" key={position.id}>
+          <li className="flex gap-1 bg-slate-300 w-max px-1" key={position.id}>
             {index + 1}. {position.title}
             <Delete onClick={() => handleOptionChange(position)} />
           </li>
