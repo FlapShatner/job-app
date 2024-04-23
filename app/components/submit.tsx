@@ -53,34 +53,37 @@ const Submit = () => {
   const handleClick = async () => {
     const emptyFields = [...findEmptyStrings(contact), ...findEmptyStrings(pitch), ...findEmptyStrings(appeal), ...findEmptyStrings(conditions)]
     let missing = missingRequired(emptyFields)
-    let proceed = true
+
     if (emptyFields.length > 0) {
       setMissingFields(missing)
-      proceed = false
+      console.log('emptyfieldsmissing:', missing)
+      if (missing.length > 0) return
     }
     if (selectedPositions.length === 0) {
       missing = [...missing, 'positions']
       setMissingFields([...missing, 'positions'])
-      proceed = false
+      console.log('positionsmissing:', missing)
+      return
     }
     if (appeal === '') {
       missing = [...missing, 'appeal']
       setMissingFields([...missing, 'appeal'])
-      proceed = false
+      console.log('appealmissing:', missing)
+      return
     }
     if (pitch === '') {
       missing = [...missing, 'pitch']
       setMissingFields([...missing, 'pitch'])
-      proceed = false
+      console.log('pitchmissing:', missing)
+      return
     }
     if (!available && conditions.length === 0) {
       missing = [...missing, 'conditions']
       setMissingFields([...missing, 'conditions'])
-      proceed = false
-    }
-    if (proceed === false) {
+      console.log('availmissing:', missing)
       return
     }
+
     const data = {
       ageConfirm: ageConfirm,
       contact,
@@ -106,6 +109,7 @@ const Submit = () => {
     }
     setData(data)
     console.log(data)
+
     const response = await fetch('http://localhost:3000/api/send', {
       method: 'POST',
       headers: {
