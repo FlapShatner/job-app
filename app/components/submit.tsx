@@ -3,6 +3,7 @@ import { cn } from '../utils/cn'
 import { useAtomValue, useAtom } from 'jotai'
 import { findEmptyStrings, missingRequired } from '../utils/utils'
 import { ToastContainer, toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
 import {
   ageConfirmAtom,
   contactAtom,
@@ -26,7 +27,6 @@ import {
   missingFieldsAtom,
   dataAtom
 } from '../state/atoms'
-import ReactEmail from '../email/react-email'
 import Loading from './loading'
 
 const Submit = () => {
@@ -50,8 +50,9 @@ const Submit = () => {
   const pitch = useAtomValue(pitchAtom)
   const available = useAtomValue(availableAtom)
   const conditions = useAtomValue(conditionsAtom)
-  const [data, setData] = useAtom(dataAtom)
   const [missingFields, setMissingFields] = useAtom(missingFieldsAtom)
+
+  const router = useRouter()
 
   const notify = () => toast('Please fill out all required fields', { type: 'error' })
 
@@ -61,7 +62,6 @@ const Submit = () => {
     let proceed = true
     if (emptyFields.length > 0) {
       setMissingFields(missing)
-      console.log('emptyfieldsmissing:', missing)
       if (missing.length > 0) {
         proceed = false
       }
@@ -69,28 +69,24 @@ const Submit = () => {
     if (selectedPositions.length === 0) {
       missing = [...missing, 'positions']
       setMissingFields([...missing, 'positions'])
-      console.log('positionsmissing:', missing)
 
       proceed = false
     }
     if (appeal === '') {
       missing = [...missing, 'appeal']
       setMissingFields([...missing, 'appeal'])
-      console.log('appealmissing:', missing)
 
       proceed = false
     }
     if (pitch === '') {
       missing = [...missing, 'pitch']
       setMissingFields([...missing, 'pitch'])
-      console.log('pitchmissing:', missing)
 
       proceed = false
     }
     if (!available && conditions.length === 0) {
       missing = [...missing, 'conditions']
       setMissingFields([...missing, 'conditions'])
-      console.log('availmissing:', missing)
 
       proceed = false
     }
@@ -122,8 +118,6 @@ const Submit = () => {
       available,
       conditions
     }
-    setData(data)
-    console.log(data)
     setIsLoading(true)
     const response = await fetch('/api/send', {
       method: 'POST',
@@ -137,6 +131,7 @@ const Submit = () => {
     if (res.id) {
       setIsLoading(false)
       toast('Application submitted successfully', { type: 'success' })
+      router.push('/complete')
     }
   }
 

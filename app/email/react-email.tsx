@@ -1,5 +1,4 @@
-import { mockData } from '@/app/data/mock'
-import { Body, Button, Container, Column, Head, Heading, Hr, Html, Img, Link, Preview, Row, Section, Text } from '@react-email/components'
+import { Body, Head, Hr, Html, Section, Text } from '@react-email/components'
 import { Tailwind } from '@react-email/tailwind'
 import { Data } from '../types/exp'
 
@@ -25,7 +24,6 @@ function filterSelected(experience: Experience): Experience {
 }
 //
 export default function ReactEmail({ data }: { data: Data }) {
-  //   const data = mockData
   const experience = filterSelected(data.experience)
   return (
     <Html lang="en">

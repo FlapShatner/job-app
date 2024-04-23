@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import { cn } from '../utils/cn'
 import { positions } from '../data/positions'
 import { Position } from '../types/positions'

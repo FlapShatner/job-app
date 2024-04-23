@@ -1,7 +1,6 @@
 'use client'
 import React from 'react'
 import CheckSq from './icons/check-sq'
-import { cn } from '../utils/cn'
 import { useAtom } from 'jotai'
 import { ageConfirmAtom } from '../state/atoms'
 import Square from './icons/square'

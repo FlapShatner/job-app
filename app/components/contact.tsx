@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { cn } from '../utils/cn'
 import { useAtom } from 'jotai'
 import { contactAtom, missingFieldsAtom } from '../state/atoms'
