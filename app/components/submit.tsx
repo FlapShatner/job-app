@@ -24,8 +24,7 @@ import {
   pitchAtom,
   availableAtom,
   conditionsAtom,
-  missingFieldsAtom,
-  dataAtom
+  missingFieldsAtom
 } from '../state/atoms'
 import Loading from './loading'
 
@@ -143,6 +142,7 @@ const Submit = () => {
       >
         {isLoading ? <Loading /> : 'Submit Application'}
       </button>
+
       <ToastContainer />
     </div>
   )
