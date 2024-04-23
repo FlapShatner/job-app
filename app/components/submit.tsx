@@ -48,7 +48,7 @@ const Submit = () => {
   const [data, setData] = useAtom(dataAtom)
   const [missingFields, setMissingFields] = useAtom(missingFieldsAtom)
 
-  const handleClick = () => {
+  const handleClick = async () => {
     const emptyFields = [...findEmptyStrings(contact), ...findEmptyStrings(pitch), ...findEmptyStrings(appeal), ...findEmptyStrings(conditions)]
     let missing = missingRequired(emptyFields)
     let proceed = true
@@ -104,6 +104,11 @@ const Submit = () => {
     }
     setData(data)
     console.log(data)
+    const response = await fetch('http://localhost:3000/api/send', {
+      method: 'POST'
+    })
+    const res = await response.json()
+    console.log('res:', res)
   }
 
   return (
