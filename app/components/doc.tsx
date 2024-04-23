@@ -1,7 +1,8 @@
 import React from 'react'
 import { useAtomValue, useAtom } from 'jotai'
-import { dataAtom } from '../state/atoms'
-import { mockData } from '../data/mock'
+import { Data } from '../types/exp'
+// import { dataAtom } from '../state/atoms'
+// import { mockData } from '../data/mock'
 
 interface ExperienceItem {
  id: string
@@ -24,13 +25,13 @@ function filterSelected(experience: Experience): Experience {
  return selected
 }
 
-const Doc = () => {
+const Doc = ({ data }: { data: Data }) => {
  // const data = useAtomValue(dataAtom)
- const data = mockData
+ //  const data = mockData
  const experience = filterSelected(data.experience)
 
  return (
-  <div className='p-8 max-w-xl flex flex-col gap-4'>
+  <div className='p-8 max-w-xl  flex-col gap-4 hidden'>
    <div className='bg-slate-200 flex flex-col gap-2'>
     <h2 className='text-lg bg-slate-300'>Contact Information:</h2>
     <div className='flex flex-col'>
