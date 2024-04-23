@@ -1,6 +1,7 @@
 import React from 'react'
 import { useAtomValue, useAtom } from 'jotai'
 import { findEmptyStrings, missingRequired } from '../utils/utils'
+import { sendEmail } from '../utils/services'
 import {
   ageConfirmAtom,
   contactAtom,
@@ -24,6 +25,7 @@ import {
   missingFieldsAtom,
   dataAtom
 } from '../state/atoms'
+import ReactEmail from '../email/react-email'
 
 const Submit = () => {
   const ageConfirm = useAtomValue(ageConfirmAtom)
@@ -76,7 +78,7 @@ const Submit = () => {
       setMissingFields([...missing, 'conditions'])
       proceed = false
     }
-    if (!proceed) {
+    if (proceed === false) {
       return
     }
     const data = {
@@ -105,7 +107,11 @@ const Submit = () => {
     setData(data)
     console.log(data)
     const response = await fetch('http://localhost:3000/api/send', {
-      method: 'POST'
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
     })
     const res = await response.json()
     console.log('res:', res)
@@ -116,6 +122,7 @@ const Submit = () => {
       <button onClick={handleClick} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-12 rounded">
         Submit Application
       </button>
+      {/* <ReactEmail data={data} /> */}
     </div>
   )
 }

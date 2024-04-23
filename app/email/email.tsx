@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import { useAtomValue, useAtom } from 'jotai'
+import { Data } from '../types/exp'
 import { dataAtom } from '../state/atoms'
 import { mockData } from '../data/mock'
 
@@ -25,8 +26,8 @@ function filterSelected(experience: Experience): Experience {
   return selected
 }
 
-const Email = () => {
-  const data = useAtomValue(dataAtom)
+const Email: React.FC<Readonly<{ data: Data }>> = ({ data }) => {
+  //   const data = useAtomValue(dataAtom)
   // const data = mockData
   const experience = filterSelected(data.experience)
   console.log(data)

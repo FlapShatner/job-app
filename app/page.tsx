@@ -10,6 +10,7 @@ import PrevEmploy from './components/employment/prev-employ'
 import Pitch from './components/pitch'
 import Conditions from './components/conditions'
 import Submit from './components/submit'
+import Email from './email/email'
 
 export default function Home() {
   return (
