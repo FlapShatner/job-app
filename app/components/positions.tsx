@@ -6,6 +6,7 @@ import { Position } from '../types/positions'
 import Delete from './icons/delete'
 import { useAtom } from 'jotai'
 import { selectedPositionsAtom, missingFieldsAtom } from '../state/atoms'
+import PositionSelect from './position-select'
 
 const Positions = () => {
   const [selectedPositions, setSelectedPositions] = useAtom(selectedPositionsAtom)
@@ -28,15 +29,22 @@ const Positions = () => {
         <p className={cn('bg-slate-200 pl-2')}>Please select what type of position you feel you would be best suited for</p>
         <p className={cn('text-sm bg-slate-200 pl-2 pb-1')}>(Choose 1 or more in order of appeal)</p>
       </div>
-      <ul className="flex flex-col gap-1 mt-1 border border-slate-500">
-        {selectedPositions.map((position, index) =>
-          <li className="flex gap-1 bg-slate-300 w-max px-1" key={position.id}>
-            {index + 1}. {position.title}
-            <Delete onClick={() => handleOptionChange(position)} />
-          </li>
-        )}
-      </ul>
-      <ul className="grid grid-cols-2 mt-2 gap-1">
+      <div className="flex gap-4 mt-2">
+        <PositionSelect />
+        <ul className="flex flex-col gap-1 w-1/2 border border-slate-500">
+          <p className="text-sm text-center">Selected Positions</p>
+          {selectedPositions.map((position, index) =>
+            <li className="flex justify-between gap-1 bg-slate-300 w-full px-1" key={position.id}>
+              <span className="text-sm sm:text-base">
+                {index + 1}. {position.title}
+              </span>
+              <Delete onClick={() => handleOptionChange(position)} />
+            </li>
+          )}
+        </ul>
+      </div>
+
+      {/* <ul className="grid grid-cols-2 mt-2 gap-1">
         {positions.map(position => {
           const [isSelected] = selectedPositions.filter(selected => selected.id === position.id)
           return (
@@ -51,7 +59,7 @@ const Positions = () => {
             </li>
           )
         })}
-      </ul>
+      </ul> */}
     </div>
   )
 }

@@ -7,7 +7,7 @@ type Props = {
 const Delete = ({ onClick }: Props) => {
   return (
     <svg
-      className="cursor-pointer"
+      className="cursor-pointer min-w-[18px]"
       onClick={onClick}
       clipRule="evenodd"
       fillRule="evenodd"
