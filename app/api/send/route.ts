@@ -22,7 +22,7 @@ export async function POST(request: Request) {
  try {
   const { data, error } = await resend.emails.send({
    from: 'Job Application <jordan@jrobertsweb.dev>',
-   to: ['jrobertswebdev@gmail.com'],
+   to: ['inkmonkeyllc@gmail.com'],
    subject: 'New Applicant',
    react: ReactEmail({ data: userData }) as React.ReactElement,
    attachments: [
