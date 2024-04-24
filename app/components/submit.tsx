@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { cn } from '../utils/cn'
+import ReactPDF, { PDFViewer } from '@react-pdf/renderer'
 import { useAtomValue, useAtom } from 'jotai'
 import { findEmptyStrings, missingRequired } from '../utils/utils'
 import { ToastContainer, toast } from 'react-toastify'
@@ -24,11 +25,14 @@ import {
   pitchAtom,
   availableAtom,
   conditionsAtom,
-  missingFieldsAtom
+  missingFieldsAtom,
+  dataAtom
 } from '../state/atoms'
 import Loading from './loading'
+import { MyDocument } from '../pdf/pdf'
 
 const Submit = () => {
+  const [data, setData] = useAtom(dataAtom)
   const [isLoading, setIsLoading] = useState(false)
   const ageConfirm = useAtomValue(ageConfirmAtom)
   const contact = useAtomValue(contactAtom)
@@ -117,6 +121,7 @@ const Submit = () => {
       available,
       conditions
     }
+    setData(data)
     setIsLoading(true)
     const response = await fetch('/api/send', {
       method: 'POST',
@@ -142,7 +147,6 @@ const Submit = () => {
       >
         {isLoading ? <Loading /> : 'Submit Application'}
       </button>
-
       <ToastContainer />
     </div>
   )

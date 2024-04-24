@@ -91,15 +91,15 @@ export const mockData = {
     "prevEmploy": [
       {
         "id": "emp1",
-        "employer": "NO",
-        "duration": "7day",
-        "reason": "died"
+        "employer": "Red Lobster",
+        "duration": "2 Years",
+        "reason": "Some good reason I'm sure"
       },
       {
         "id": "emp2",
-        "employer": "",
-        "duration": "",
-        "reason": ""
+        "employer": "Gas Station",
+        "duration": "5 Years",
+        "reason": "I was too good for them"
       },
       {
         "id": "emp3",
